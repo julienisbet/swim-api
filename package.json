@@ -1,0 +1,53 @@
+{
+  "name": "backend-express-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "jest --verbose --runInBand --testLocationInResults --setupFiles dotenv/config --passWithNoTests",
+    "test:watch": "npm run test -- --watch",
+    "start": "node -r dotenv/config server.js",
+    "start:watch": "nodemon -r dotenv/config server.js",
+    "db:reset": "npm run db:drop && npm run db:setup && npm run db:seed",
+    "db:drop": "env-cmd cross-var dropdb %DB_NAME% && echo db dropped || echo db does not exist",
+    "db:setup": "env-cmd cross-var createdb %DB_NAME% && echo db created || echo db already exists",
+    "db:seed": "env-cmd cross-var psql -d %DB_NAME% -f ./data/setup.sql",
+    "db:test:reset": "npm run db:drop:test && npm run db:setup:test && npm run db:seed:test",
+    "db:test:drop": "env-cmd cross-var dropdb %DB_NAME%_test && echo db dropped || echo db does not exist",
+    "db:test:setup": "env-cmd cross-var createdb %DB_NAME%_test && echo db created || echo db already exists",
+    "db:test:seed": "env-cmd cross-var psql -d %DB_NAME%_test -f ./data/setup.sql"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.18.2",
+    "@babel/eslint-parser": "^7.18.2",
+    "@babel/eslint-plugin": "^7.17.7",
+    "@babel/plugin-syntax-class-properties": "^7.12.13",
+    "@types/jest": "^28.1.1",
+    "@types/pg": "^8.6.5",
+    "eslint": "^8.17.0",
+    "jest": "^28.1.0",
+    "nodemon": "^2.0.16",
+    "prettier": "^2.6.2",
+    "supertest": "^6.2.3"
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "cross-var": "^1.1.0",
+    "dotenv": "^16.0.1",
+    "dotenv-cli": "^6.0.0",
+    "env-cmd": "^10.1.0",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.7.3"
+  }
+}
