@@ -1,11 +1,10 @@
 const app = require('./lib/app');
 const pool = require('./sql/pool');
 
-const API_URL = process.env.API_URL || 'http://localhost';
 const PORT = process.env.PORT || 7890;
 
-app.listen(PORT, () => {
-  console.info(`🚀  Server started on ${API_URL}:${PORT}`);
+app.listen(PORT, async () => {
+  console.info(`🚀  Server started on port ${PORT}`);
 });
 
 process.on('exit', () => {

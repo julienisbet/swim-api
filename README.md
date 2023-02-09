@@ -7,11 +7,19 @@ If you work on more than one feature at a time, you are guaranteed to multiply y
 
 ## Scripts
 
-| command                | description                                                                         |
-| ---------------------- | ----------------------------------------------------------------------------------- |
-| `npm start`            | starts the app - should only be used in production as changes will not get reloaded |
-| `npm run start:watch`  | runs the app using `nodemon` which watches for changes and reloads the app          |
-| `npm test`             | runs the tests once                                                                 |
-| `npm run test:watch`   | continually watches and runs the tests when files are updated                       |
-| `npm run setup-db`     | sets up the database locally                                                        |
-| `npm run setup-heroku` | sets up the database on heroku                                                      |
+| command               | description                                                                         |
+| --------------------- | ----------------------------------------------------------------------------------- |
+| `npm start`           | starts the app - should only be used in production as changes will not get reloaded |
+| `npm run start:watch` | runs the app using `nodemon` which watches for changes and reloads the app          |
+| `npm test`            | runs the tests once                                                                 |
+| `npm run test:watch`  | continually watches and runs the tests when files are updated                       |
+
+### Database Setup Commands
+
+All the following commands can be run on the local database or the test database. To run them on the test database, append `:test` to the command
+| command | description |
+| --------------------- | ----------------------------------------------------------------------------------- |
+| `npm run db:reset` | drops, creates and seeds the database locally |
+| `npm run db:drop` | drops the database locally |
+| `npm run db:setup` | creates the database locally |
+| `npm run db:seed` | seeds the database locally |

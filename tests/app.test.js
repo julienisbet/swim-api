@@ -1,9 +1,11 @@
-// const pool = require('../sql/pool');
+const { setupDb } = require('./utils');
 // const request = require('supertest');
 // const app = require('../lib/app');
 
 describe('backend-express-template routes', () => {
-  it('example test - delete me!', () => {
-    expect(1).toEqual(1);
+  beforeEach(setupDb);
+
+  it('example test - delete me!', async () => {
+    expect(1).toBe(1);
   });
 });
