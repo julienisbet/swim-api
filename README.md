@@ -23,3 +23,7 @@ All the following commands can be run on the local database or the test database
 | `npm run db:drop` | drops the database locally |
 | `npm run db:setup` | creates the database locally |
 | `npm run db:seed` | seeds the database locally |
+
+### Heroku Setup
+
+Add your Postgres add-on and set the environment variable `PGSSLMODE` to `require`. Then in your terminal run `npm run heroku:setup -- -a <name of your heroku app>` This should run the setup sql on your production postgres.
