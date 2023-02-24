@@ -1,12 +1,10 @@
 -- Use this file to define your SQL tables
 -- The SQL in this file will be executed when you run `npm run setup-db`
-DROP TABLE IF EXISTS workouts_sets;
-
 DROP TABLE IF EXISTS swim_sets_parts;
 
-DROP TABLE IF EXISTS workouts;
-
 DROP TABLE IF EXISTS swim_sets;
+
+DROP TABLE IF EXISTS workouts;
 
 DROP TABLE IF EXISTS parts;
 
@@ -19,7 +17,10 @@ CREATE TABLE workouts (
 
 CREATE TABLE swim_sets (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  description VARCHAR NOT NULL
+  description VARCHAR NOT NULL,
+  workout_id BIGINT,
+  repeat INT,
+  FOREIGN KEY (workout_id) REFERENCES workouts(id)
 );
 
 CREATE TABLE parts (
@@ -30,20 +31,11 @@ CREATE TABLE parts (
   detail VARCHAR
 );
 
-CREATE TABLE workouts_sets(
-  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  workout_id BIGINT,
-  swim_set_id BIGINT,
-  repeat INT,
-  FOREIGN KEY (workout_id) REFERENCES workouts(id),
-  FOREIGN KEY (swim_set_id) REFERENCES swim_sets(id)
-);
-
 CREATE TABLE swim_sets_parts(
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  swim_set_id BIGINT,
+  swim_sets_id BIGINT,
   parts_id BIGINT,
-  FOREIGN KEY(swim_set_id) REFERENCES swim_sets(id),
+  FOREIGN KEY(swim_sets_id) REFERENCES swim_sets(id),
   FOREIGN KEY(parts_id) REFERENCES parts(id)
 );
 
@@ -57,11 +49,11 @@ VALUES
   );
 
 INSERT INTO
-  swim_sets (description)
+  swim_sets (workout_id, description, repeat)
 VALUES
-  ('Warm Up'),
-  ('Main Set'),
-  ('Warm Down');
+  (1, 'Warm Up', 1),
+  (1, 'Main Set', 2),
+  (1, 'Warm Down', 1);
 
 INSERT INTO
   parts (qty, distance, base, detail)
@@ -78,17 +70,10 @@ VALUES
   );
 
 INSERT INTO
-  swim_sets_parts (swim_set_id, parts_id)
+  swim_sets_parts (swim_sets_id, parts_id)
 VALUES
   (1, 1),
   (1, 2),
   (1, 3),
   (2, 4),
   (2, 5);
-
-INSERT INTO
-  workouts_sets (workout_id, swim_set_id, repeat)
-VALUES
-  (1, 1, 1),
-  (1, 2, 2),
-  (1, 3, 1);
