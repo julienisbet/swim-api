@@ -18,4 +18,16 @@ describe('workout routes', () => {
       });
     });
   });
+
+  describe('GET /workouts/:id', () => {
+    it('should return workout details', async () => {
+      const resp = await request(app).get('/api/v1/workouts/1');
+      expect(resp.status).toBe(200);
+      expect(resp.body).toEqual({
+        id: '1',
+        name: 'Ravioli Starfish',
+        description: 'Mostly free - short distances',
+      });
+    });
+  });
 });
