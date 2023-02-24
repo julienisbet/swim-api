@@ -25,7 +25,7 @@ CREATE TABLE swim_sets (
 
 CREATE TABLE parts (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  swim_set_id BIGINT,
+  swim_set_id BIGINT NOT NULL,
   qty INT NOT NULL,
   distance INT NOT NULL,
   base VARCHAR,
@@ -52,9 +52,9 @@ VALUES
 INSERT INTO
   parts (qty, distance, base, detail, swim_set_id)
 VALUES
-  (3, 50, NULL, 'Kick', 1),
-  (1, 50, NULL, 'Drill', 1),
-  (1, 100, NULL, 'Swim', 1),
+  (3, 50, 'Easy', 'Kick', 1),
+  (3, 50, 'Easy', 'Drill', 1),
+  (3, 100, 'Easy', 'Swim', 1),
   (6, 100, 'Kick Base', 'kick descend 1-3, 4-6', 2),
   (
     8,
