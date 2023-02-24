@@ -2,7 +2,7 @@
 -- The SQL in this file will be executed when you run `npm run setup-db`
 DROP TABLE IF EXISTS workouts_sets;
 
-DROP TABLE IF EXISTS sets_parts;
+DROP TABLE IF EXISTS swim_sets_parts;
 
 DROP TABLE IF EXISTS workouts;
 
@@ -26,7 +26,7 @@ CREATE TABLE parts (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   qty INT NOT NULL,
   distance INT NOT NULL,
-  INTERVAL VARCHAR,
+  base VARCHAR,
   detail VARCHAR
 );
 
@@ -64,7 +64,7 @@ VALUES
   ('Warm Down');
 
 INSERT INTO
-  parts (qty, distance, INTERVAL, detail)
+  parts (qty, distance, base, detail)
 VALUES
   (3, 50, NULL, 'Kick'),
   (1, 50, NULL, 'Drill'),
