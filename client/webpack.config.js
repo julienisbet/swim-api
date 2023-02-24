@@ -6,6 +6,7 @@ module.exports = {
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'build'),
+    publicPath: '/',
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -20,6 +21,7 @@ module.exports = {
       '/api': 'http://localhost:7890',
     },
     port: 3000,
+    historyApiFallback: true,
   },
   module: {
     // exclude node_modules
@@ -29,6 +31,7 @@ module.exports = {
         exclude: /node_modules/,
         use: ['babel-loader'],
       },
+      { test: /\.css$/, use: ['style-loader', 'css-loader'] },
     ],
   },
   // pass all js files through Babel
