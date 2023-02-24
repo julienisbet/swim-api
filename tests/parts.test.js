@@ -18,6 +18,7 @@ describe('parts routes', () => {
           "distance": 200,
           "id": "6",
           "qty": 4,
+          "stroke": null,
           "swimSetId": "2",
         }
       `);

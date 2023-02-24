@@ -4,12 +4,15 @@ import { BrowserRouter } from 'react-router-dom';
 import '@fontsource/roboto';
 
 import App from './App';
+import { WorkoutProvider } from './context/WorkoutContext';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
   <BrowserRouter>
-    <App />
+    <WorkoutProvider>
+      <App />
+    </WorkoutProvider>
   </BrowserRouter>
 );
