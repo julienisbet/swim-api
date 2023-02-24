@@ -2,11 +2,11 @@
 -- The SQL in this file will be executed when you run `npm run setup-db`
 DROP TABLE IF EXISTS swim_sets_parts;
 
+DROP TABLE IF EXISTS parts;
+
 DROP TABLE IF EXISTS swim_sets;
 
 DROP TABLE IF EXISTS workouts;
-
-DROP TABLE IF EXISTS parts;
 
 CREATE TABLE workouts (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -25,18 +25,12 @@ CREATE TABLE swim_sets (
 
 CREATE TABLE parts (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  swim_set_id BIGINT,
   qty INT NOT NULL,
   distance INT NOT NULL,
   base VARCHAR,
-  detail VARCHAR
-);
-
-CREATE TABLE swim_sets_parts(
-  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  swim_sets_id BIGINT,
-  parts_id BIGINT,
-  FOREIGN KEY(swim_sets_id) REFERENCES swim_sets(id),
-  FOREIGN KEY(parts_id) REFERENCES parts(id)
+  detail VARCHAR,
+  FOREIGN KEY(swim_set_id) REFERENCES swim_sets(id)
 );
 
 INSERT INTO
@@ -56,24 +50,16 @@ VALUES
   (1, 'Warm Down', 1);
 
 INSERT INTO
-  parts (qty, distance, base, detail)
+  parts (qty, distance, base, detail, swim_set_id)
 VALUES
-  (3, 50, NULL, 'Kick'),
-  (1, 50, NULL, 'Drill'),
-  (1, 100, NULL, 'Swim'),
-  (6, 100, 'Kick Base', 'kick descend 1-3, 4-6'),
+  (3, 50, NULL, 'Kick', 1),
+  (1, 50, NULL, 'Drill', 1),
+  (1, 100, NULL, 'Swim', 1),
+  (6, 100, 'Kick Base', 'kick descend 1-3, 4-6', 2),
   (
     8,
     50,
     'Base + 20',
-    '2x through: buildup, build down, easy, fast'
+    '2x through: buildup, build down, easy, fast',
+    2
   );
-
-INSERT INTO
-  swim_sets_parts (swim_sets_id, parts_id)
-VALUES
-  (1, 1),
-  (1, 2),
-  (1, 3),
-  (2, 4),
-  (2, 5);
