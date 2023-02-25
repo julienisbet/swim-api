@@ -1,9 +1,12 @@
 {
-  "name": "backend-express-template",
-  "version": "2.0.0",
+  "name": "swimming-api",
+  "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "type": "commonjs",
+  "engines": {
+    "node": "16.x"
+  }
   "scripts": {
     "test": "env-cmd --silent -f ./.env.test jest --verbose --runInBand --testLocationInResults --passWithNoTests",
     "test:watch": "npm run test -- --watch",
