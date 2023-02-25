@@ -29,9 +29,7 @@ export default function Edit() {
       <Page kind="narrow">
         <PageContent>
           <PageHeader title={workout.name} subtitle={workout.description} />
-
-          {sets && sets.map((set) => <SetDisplay key={set.id} {...set} />)}
-          <Box direction="row" align="center">
+          <Box direction="row" align="center" gap="small">
             <TextInput
               placeholder="Add a set..."
               name="description"
@@ -48,6 +46,8 @@ export default function Edit() {
               }}
             />
           </Box>
+
+          {sets && sets.map((set) => <SetDisplay key={set.id} {...set} />)}
         </PageContent>
       </Page>
     </div>

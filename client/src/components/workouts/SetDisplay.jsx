@@ -15,14 +15,15 @@ export default function SetDisplay({ id, description, parts }) {
         )}
       </Box>
       {addPart && <PartForm setId={id} />}
-      {parts.map((part) => (
-        <ul key={part.id}>
-          <li>
-            {part.qty} x {part.distance} {part.stroke} @ {part.base}
-            {part.detail && <>({part.detail})</>}
-          </li>
-        </ul>
-      ))}
+      {parts &&
+        parts.map((part) => (
+          <ul key={part.id}>
+            <li>
+              {part.qty} x {part.distance} {part.stroke} @ {part.base}
+              {part.detail && <>({part.detail})</>}
+            </li>
+          </ul>
+        ))}
     </div>
   );
 }
