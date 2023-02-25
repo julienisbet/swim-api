@@ -1,6 +1,7 @@
 const { setupDb } = require('./utils');
 const request = require('supertest');
 const app = require('../lib/app');
+const Part = require('../lib/models/Part');
 
 describe('workout routes', () => {
   beforeEach(setupDb);
@@ -114,6 +115,21 @@ describe('workout routes', () => {
         body: { sets },
       } = await request(app).get('/api/v1/workouts/1');
       expect(sets.length).toBe(4);
+    });
+  });
+
+  describe('DELETE /workouts/:id/sets/:id', () => {
+    it('should delete an associated set', async () => {
+      const resp = await request(app).delete('/api/v1/workouts/1/sets/1');
+      expect(resp.status).toBe(204);
+      // confirm set delete
+      const {
+        body: { sets },
+      } = await request(app).get('/api/v1/workouts/1');
+      expect(sets.length).toBe(2);
+      // confirm cascade delete
+      const partsCount = await Part.count();
+      expect(partsCount).toBe('2');
     });
   });
 });

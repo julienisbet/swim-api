@@ -31,7 +31,7 @@ CREATE TABLE parts (
   base VARCHAR,
   stroke VARCHAR,
   detail VARCHAR,
-  FOREIGN KEY(swim_set_id) REFERENCES swim_sets(id)
+  FOREIGN KEY(swim_set_id) REFERENCES swim_sets(id) ON DELETE CASCADE
 );
 
 INSERT INTO

@@ -24,4 +24,10 @@ describe('parts routes', () => {
       `);
     });
   });
+  describe('DELETE /parts/:id', () => {
+    it('should delete a part', async () => {
+      const resp = await request(app).delete('/api/v1/parts/1');
+      expect(resp.status).toBe(204);
+    });
+  });
 });
