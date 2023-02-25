@@ -6,7 +6,7 @@
   "type": "commonjs",
   "engines": {
     "node": "16.x"
-  }
+  },
   "scripts": {
     "test": "env-cmd --silent -f ./.env.test jest --verbose --runInBand --testLocationInResults --passWithNoTests",
     "test:watch": "npm run test -- --watch",
