@@ -17,7 +17,8 @@
     "db:drop:test": "env-cmd -f ./.env.test cross-var dropdb %PGDATABASE% && echo db dropped || echo db does not exist",
     "db:setup:test": "env-cmd -f ./.env.test cross-var createdb && echo db created || echo db already exists",
     "db:seed:test": "env-cmd -f ./.env.test cross-var psql -f ./sql/setup.sql",
-    "heroku:setup": "heroku pg:psql -f ./sql/setup.sql"
+    "heroku:setup": "heroku pg:psql -f ./sql/setup.sql",
+    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
   },
   "jest": {
     "testEnvironment": "node"
