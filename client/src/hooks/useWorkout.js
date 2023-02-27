@@ -1,9 +1,9 @@
 import { useContext, useEffect } from 'react';
 import { createWorkout, fetchWorkout } from '../services/workouts';
 import { useNavigate, useParams } from 'react-router-dom';
-import { createSet } from '../services/sets';
+import { createSet, deleteSet } from '../services/sets';
 import { WorkoutContext } from '../context/WorkoutContext';
-import { createPart } from '../services/parts';
+import { createPart, deletePart } from '../services/parts';
 
 export const useWorkout = () => {
   // State from Context
@@ -45,6 +45,16 @@ export const useWorkout = () => {
     }
   };
 
+  const removeSet = async (id) => {
+    try {
+      await deleteSet(workout.id, id);
+      setSets((prev) => prev.filter((s) => s.id !== id));
+    } catch (e) {
+      // TODO error handling
+      console.error(e);
+    }
+  };
+
   const addPartToSet = async (setId, partDetail) => {
     const resp = await createPart(setId, partDetail);
     setSets((prev) => {
@@ -54,5 +64,21 @@ export const useWorkout = () => {
     });
   };
 
-  return { add, workout, sets, addSet, addPartToSet };
+  const removePart = async (setId, partId) => {
+    console.log(partId);
+    try {
+      await deletePart(partId);
+      setSets((prev) => {
+        return prev.map((s) => {
+          return s.id === setId
+            ? { ...s, parts: s.parts.filter((p) => p.id !== partId) }
+            : { ...s };
+        });
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  return { add, workout, sets, addSet, addPartToSet, removePart, removeSet };
 };

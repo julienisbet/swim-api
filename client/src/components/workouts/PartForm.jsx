@@ -1,5 +1,5 @@
-import { Box, Button, Form, FormField, TextInput, Select } from 'grommet';
-import { Add, AddCircle } from 'grommet-icons';
+import { Box, Button, Form, TextInput, Select } from 'grommet';
+import { StatusGood } from 'grommet-icons';
 import { useState } from 'react';
 import { useWorkout } from '../../hooks/useWorkout';
 
@@ -70,7 +70,7 @@ export default function PartForm({ setId }) {
         </Box>
         <Button
           type="reset"
-          icon={<AddCircle />}
+          icon={<StatusGood color="status-ok" />}
           hoverIndicator
           onClick={() => {
             addPartToSet(setId, partDetail);

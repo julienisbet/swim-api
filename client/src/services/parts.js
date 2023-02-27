@@ -11,3 +11,15 @@ export async function createPart(swimSetId, partDetail) {
   const data = await resp.json();
   return data;
 }
+
+export async function deletePart(id) {
+  await fetch(`/api/v1/parts/${id}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+  });
+  return true;
+}

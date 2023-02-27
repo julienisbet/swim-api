@@ -11,3 +11,15 @@ export async function createSet(workoutId, set) {
   const data = await resp.json();
   return data;
 }
+
+export async function deleteSet(workoutId, setId) {
+  await fetch(`/api/v1/workouts/${workoutId}/sets/${setId}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+  });
+  return true;
+}
