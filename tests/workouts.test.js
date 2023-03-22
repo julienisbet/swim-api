@@ -6,6 +6,22 @@ const Part = require('../lib/models/Part');
 describe('workout routes', () => {
   beforeEach(setupDb);
 
+  describe('GET /workouts', () => {
+    it('should return workouts', async () => {
+      const resp = await request(app).get('/api/v1/workouts');
+      expect(resp.status).toBe(200);
+      expect(resp.body).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "description": "Mostly free - short distances",
+            "id": "1",
+            "name": "Ravioli Starfish",
+          },
+        ]
+      `);
+    });
+  });
+
   describe('POST /workouts', () => {
     it('should create a new workout', async () => {
       const resp = await request(app)

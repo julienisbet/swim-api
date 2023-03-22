@@ -4,7 +4,7 @@ import Home from './components/Home';
 
 import './App.css';
 import New from './components/workouts/New';
-import Edit from './components/workouts/Edit';
+import Details from './components/workouts/Details';
 
 const theme = {
   global: {
@@ -22,8 +22,9 @@ export default function App() {
       <Grommet theme={theme} full>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/workouts/:id" element={<Details />} />
           <Route path="/workouts/new" element={<New />} />
-          <Route path="/workouts/:id/edit" element={<Edit />} />
+          <Route path="/workouts/:id/edit" element={<Details isEditing />} />
         </Routes>
       </Grommet>
     </>
