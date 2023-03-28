@@ -32,6 +32,10 @@ module.exports = {
         use: ['babel-loader'],
       },
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
+      },
     ],
   },
   // pass all js files through Babel

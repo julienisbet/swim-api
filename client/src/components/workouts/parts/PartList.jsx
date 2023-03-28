@@ -1,100 +1,71 @@
 import { Box, Button } from 'grommet';
-import { BladesVertical, Drag, FormTrash } from 'grommet-icons';
+import { Drag, FormTrash } from 'grommet-icons';
 import { useState } from 'react';
 import { useWorkout } from '../../../hooks/useWorkout';
+import './PartList.css';
 
 export default function PartList({ id, parts, isEditing }) {
-  const { removePart } = useWorkout();
-  const [displayParts, setDisplayParts] = useState(
-    parts.map((part, i) => ({ ...part, order: i }))
-  );
+  const { removePart, reorderParts } = useWorkout();
+
   const [dragging, setDragging] = useState(null);
-  const reorderParts = (targetOrder) => {
-    // targetOrder 4
-    // dragging 1
-    // 1  4
-    // 2  1
-    // 3  2
-    // 4  3
+  const [hover, setHover] = useState(null);
+  const getClassnames = (orderNum) => {
+    const classes = [];
+    if (dragging && orderNum !== dragging) classes.push('droppable');
+    if (orderNum === dragging) classes.push('dragging-active');
+    if (orderNum === hover) classes.push('target');
+    return classes.join(' ');
+  };
+  const handleDrop = (targetOrder) => {
+    if (!dragging) return;
+    if (dragging === targetOrder) return;
 
-    // targetOrder 1
-    // dragging 4
-    // 1  2
-    // 2  3
-    // 3  4
-    // 4  1
-
-    // targetOrder 2
-    // dragging 4
-    // 1  1
-    // 2  3
-    // 3  4
-    // 4  2
-    // 5  5
-
-    // targetOrder 2
-    // dragging 3
-    // 1 1
-    // 2 3
-    // 3 2
-    // 4 4
-    // 5
-
-    // if part.order === dragging then part.order = targetOrder
-    // else if targetOrder > dragging && part.order <= targetOrder && part.order >= dragging then part.order = part.order - 1
-    // else if targetOder < dragging && part.order >= targetOrder && part.order <=dragging then part.order = part.order + 1
-    setDisplayParts((prev) => {
-      console.log({ dragging, targetOrder });
-      const updatedOrders = prev.map((part) => {
-        if (part.order === dragging) {
-          return { ...part, order: targetOrder };
-        } else if (
-          targetOrder > dragging &&
-          part.order <= targetOrder &&
-          part.order >= dragging
-        ) {
-          return { ...part, order: part.order - 1 };
-        } else if (
-          targetOrder < dragging &&
-          part.order >= targetOrder &&
-          part.order <= dragging
-        ) {
-          return { ...part, order: part.order + 1 };
-        } else {
-          return { ...part };
-        }
-      });
-      console.log({ updatedOrders });
-      return updatedOrders.sort((a, b) => a.order - b.order);
-    });
+    const updatedOrders = parts.reduce((acc, part) => {
+      if (part.orderNum === dragging) {
+        acc.push({ partId: part.id, newOrder: targetOrder });
+      } else if (
+        targetOrder > dragging &&
+        part.orderNum <= targetOrder &&
+        part.orderNum >= dragging
+      ) {
+        acc.push({ partId: part.id, newOrder: part.orderNum - 1 });
+      } else if (
+        targetOrder < dragging &&
+        part.orderNum >= targetOrder &&
+        part.orderNum <= dragging
+      ) {
+        acc.push({ partId: part.id, newOrder: part.orderNum + 1 });
+      }
+      return acc;
+    }, []);
+    reorderParts(id, updatedOrders);
     setDragging(null);
   };
 
   return (
     <Box className="dragAndDrop">
-      {displayParts &&
-        displayParts.map((part) => (
+      {parts &&
+        parts.map((part) => (
           <Box
+            className={getClassnames(part.orderNum)}
             pad={'small'}
-            key={part.order}
+            key={part.id}
             direction="row"
             align="center"
-            id={part.order}
+            id={part.orderNum}
             draggable="true"
             onDragStart={(e) => {
-              console.log('dragging', e.currentTarget.id);
               setDragging(parseInt(e.target.id));
             }}
             onDragOver={(e) => {
-              console.log('dragover', e.currentTarget.id);
+              setHover(parseInt(e.currentTarget.id));
               e.preventDefault();
               e.stopPropagation();
             }}
             onDrop={(e) => {
               e.preventDefault();
               e.stopPropagation();
-              console.log('dropping', e.currentTarget);
-              reorderParts(parseInt(e.currentTarget.id));
+              handleDrop(parseInt(e.currentTarget.id));
             }}
           >
             {isEditing && <Drag />}

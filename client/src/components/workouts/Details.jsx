@@ -13,7 +13,11 @@ export default function Details({ isEditing = false }) {
   return (
     <Page kind="narrow">
       <PageContent>
-        <PageHeader title={workout.name} subtitle={workout.description} />
+        <PageHeader
+          title={workout.name}
+          subtitle={workout.description}
+          parent={<Link to="/">Home</Link>}
+        />
         {!isEditing && (
           <Link to={`/workouts/${workout.id}/edit`}>
             <Button primary label="Edit" color="dark-1" size="small" />

@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
-import { createWorkout, fetchWorkout } from '../services/workouts';
+import { createWorkout } from '../services/workouts';
 import { useNavigate, useParams } from 'react-router-dom';
-import { createSet, deleteSet } from '../services/sets';
+import { createSet, deleteSet, reorderSet } from '../services/sets';
 import { WorkoutContext } from '../context/WorkoutContext';
 import { createPart, deletePart } from '../services/parts';
 
@@ -10,20 +10,15 @@ export const useWorkout = () => {
   const workoutContext = useContext(WorkoutContext);
   if (!workoutContext)
     throw new Error('WorkoutContext must be used within a Workout Provider');
-  const { workout, setWorkout, setSets, sets } = workoutContext;
+  const { workout, setSets, sets, setId } = workoutContext;
 
   // State from Router
   const { id } = useParams();
-  const navigate = useNavigate();
-
   useEffect(() => {
-    const fetchData = async () => {
-      const { sets, ...workout } = await fetchWorkout(id);
-      setWorkout(workout);
-      setSets(sets);
-    };
-    if (id) fetchData();
-  }, [id, setWorkout, setSets]);
+    setId(id);
+  }, [setId, id]);
+
+  const navigate = useNavigate();
 
   const add = async (val) => {
     try {
@@ -65,7 +60,6 @@ export const useWorkout = () => {
   };
 
   const removePart = async (setId, partId) => {
-    console.log(partId);
     try {
       await deletePart(partId);
       setSets((prev) => {
@@ -80,5 +74,36 @@ export const useWorkout = () => {
     }
   };
 
-  return { add, workout, sets, addSet, addPartToSet, removePart, removeSet };
+  const reorderParts = async (setId, parts) => {
+    const partIdMap = {};
+    parts.forEach((p) => (partIdMap[p.partId] = p.newOrder));
+    await reorderSet(workout.id, setId, parts);
+
+    setSets((prev) => {
+      return prev.map((s) => {
+        if (s.id === setId) {
+          const updatedParts = s.parts
+            .map((p) =>
+              partIdMap[p.id] ? { ...p, orderNum: partIdMap[p.id] } : { ...p }
+            )
+            .sort((a, b) => a.orderNum - b.orderNum);
+          return {
+            ...s,
+            parts: updatedParts,
+          };
+        } else return { ...s };
+      });
+    });
+  };
+
+  return {
+    add,
+    workout,
+    sets,
+    addSet,
+    addPartToSet,
+    removePart,
+    removeSet,
+    reorderParts,
+  };
 };

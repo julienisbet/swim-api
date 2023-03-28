@@ -55,6 +55,7 @@ describe('workout routes', () => {
                   "detail": null,
                   "distance": 50,
                   "id": 1,
+                  "orderNum": 1,
                   "qty": 3,
                   "stroke": "Kick",
                   "swimSetId": 1,
@@ -64,6 +65,7 @@ describe('workout routes', () => {
                   "detail": null,
                   "distance": 50,
                   "id": 2,
+                  "orderNum": 2,
                   "qty": 3,
                   "stroke": "Drill",
                   "swimSetId": 1,
@@ -73,6 +75,7 @@ describe('workout routes', () => {
                   "detail": null,
                   "distance": 100,
                   "id": 3,
+                  "orderNum": 3,
                   "qty": 3,
                   "stroke": "Swim",
                   "swimSetId": 1,
@@ -90,6 +93,7 @@ describe('workout routes', () => {
                   "detail": "kick descend 1-3, 4-6",
                   "distance": 100,
                   "id": 4,
+                  "orderNum": 1,
                   "qty": 6,
                   "stroke": "Kick",
                   "swimSetId": 2,
@@ -99,6 +103,7 @@ describe('workout routes', () => {
                   "detail": "2x through: buildup, build down, easy, fast",
                   "distance": 50,
                   "id": 5,
+                  "orderNum": 2,
                   "qty": 8,
                   "stroke": "Free",
                   "swimSetId": 2,
@@ -146,6 +151,42 @@ describe('workout routes', () => {
       // confirm cascade delete
       const partsCount = await Part.count();
       expect(partsCount).toBe('2');
+    });
+  });
+
+  describe('POST /workouts/:id/sets/:id/reorder', () => {
+    it('should reorder the parts in a set', async () => {
+      const { body, status } = await request(app)
+        .post('/api/v1/workouts/1/sets/1/reorder')
+        .send([
+          { partId: 1, newOrder: 2 },
+          { partId: 2, newOrder: 1 },
+        ]);
+      expect(status).toBe(200);
+      expect(body).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "base": "Easy",
+            "detail": null,
+            "distance": 50,
+            "id": "1",
+            "orderNum": 2,
+            "qty": 3,
+            "stroke": "Kick",
+            "swimSetId": "1",
+          },
+          Object {
+            "base": "Easy",
+            "detail": null,
+            "distance": 50,
+            "id": "2",
+            "orderNum": 1,
+            "qty": 3,
+            "stroke": "Drill",
+            "swimSetId": "1",
+          },
+        ]
+      `);
     });
   });
 });

@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@simbathesailor/use-what-changed": "^2.0.0",
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
@@ -24,10 +25,10 @@
     "@babel/core": "^7.20.12",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
+    "@fontsource/roboto": "^4.5.8",
     "babel-loader": "^9.1.2",
     "css-loader": "^6.7.3",
     "file-loader": "^6.2.0",
-    "@fontsource/roboto": "^4.5.8",
     "grommet": "^2.29.1",
     "grommet-icons": "^4.9.0",
     "html-webpack-plugin": "^5.5.0",
@@ -36,7 +37,7 @@
     "react-router-dom": "^6.8.1",
     "style-loader": "^3.3.1",
     "styled-components": "^5.3.6",
-    "webpack": "^5.75.0",
+    "webpack": "^5.76.3",
     "webpack-cli": "^5.0.1"
   },
   "proxy": "http://localhost:7890"

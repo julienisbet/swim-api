@@ -1,0 +1,10 @@
+.droppable {
+  background-color: greenyellow;
+}
+
+.droppable.target {
+  background-color: palevioletred;
+}
+.dragging-active {
+  background-color: gray;
+}

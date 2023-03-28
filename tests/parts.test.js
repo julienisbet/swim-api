@@ -7,9 +7,13 @@ describe('parts routes', () => {
 
   describe('POST /parts', () => {
     it('should create a new part', async () => {
-      const resp = await request(app)
-        .post('/api/v1/parts')
-        .send({ qty: 4, distance: '200', base: 'base + 10', swimSetId: 2 });
+      const resp = await request(app).post('/api/v1/parts').send({
+        qty: 4,
+        distance: '200',
+        base: 'base + 10',
+        swimSetId: 2,
+        orderNum: 3,
+      });
       expect(resp.status).toBe(200);
       expect(resp.body).toMatchInlineSnapshot(`
         Object {
@@ -17,6 +21,7 @@ describe('parts routes', () => {
           "detail": null,
           "distance": 200,
           "id": "6",
+          "orderNum": 3,
           "qty": 4,
           "stroke": null,
           "swimSetId": "2",
@@ -24,6 +29,7 @@ describe('parts routes', () => {
       `);
     });
   });
+
   describe('DELETE /parts/:id', () => {
     it('should delete a part', async () => {
       const resp = await request(app).delete('/api/v1/parts/1');

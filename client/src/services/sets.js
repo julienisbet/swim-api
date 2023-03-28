@@ -23,3 +23,15 @@ export async function deleteSet(workoutId, setId) {
   });
   return true;
 }
+
+export async function reorderSet(workoutId, setId, data) {
+  await fetch(`/api/v1/workouts/${workoutId}/sets/${setId}/reorder`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify(data),
+  });
+}

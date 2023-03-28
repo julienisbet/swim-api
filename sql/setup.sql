@@ -31,6 +31,7 @@ CREATE TABLE parts (
   base VARCHAR,
   stroke VARCHAR,
   detail VARCHAR,
+  order_num INT NOT NULL,
   FOREIGN KEY(swim_set_id) REFERENCES swim_sets(id) ON DELETE CASCADE
 );
 
@@ -51,18 +52,27 @@ VALUES
   (1, 'Warm Down', 1);
 
 INSERT INTO
-  parts (qty, distance, base, stroke, detail, swim_set_id)
+  parts (
+    qty,
+    distance,
+    base,
+    stroke,
+    detail,
+    swim_set_id,
+    order_num
+  )
 VALUES
-  (3, 50, 'Easy', 'Kick', NULL, 1),
-  (3, 50, 'Easy', 'Drill', NULL, 1),
-  (3, 100, 'Easy', 'Swim', NULL, 1),
+  (3, 50, 'Easy', 'Kick', NULL, 1, 1),
+  (3, 50, 'Easy', 'Drill', NULL, 1, 2),
+  (3, 100, 'Easy', 'Swim', NULL, 1, 3),
   (
     6,
     100,
     'Kick Base',
     'Kick',
     'kick descend 1-3, 4-6',
-    2
+    2,
+    1
   ),
   (
     8,
@@ -70,5 +80,6 @@ VALUES
     'Base + 20',
     'Free',
     '2x through: buildup, build down, easy, fast',
+    2,
     2
   );
